@@ -1,36 +1,28 @@
 import EmployeeView from "../views/EmployeeView";
-import React, {Component} from "react"
-import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "../../store/tasksSlice";
-import { fetchEmployee } from "../../store/employeeSlice";
+import { useEffect } from "react";
 
-class EmployeeContainer extends Component {
-    componentDidMount(){
-        this.props.fetchEmployee(this.props.match.params.id);
-        this.props.fetchTasks();
-    }
 
-    render(){
-        return(
-            <EmployeeView
-            employee={this.props.employee}
-            allTasks={this.props.allTasks}
-            />
-        );
-    }
+function EmployeeContainer(){
+    let { employeeId } = useParams();
+    employeeId = parseInt(employeeId);
+
+    const employee = useSelector(state => state.employees.find(employee => employee.id === employeeId));
+    console.log(employee);
+    const employeeTask = useSelector(state => state.tasks.filter(employeeTask => employeeTask.employeeId === employeeId));
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchTasks());
+      }, [dispatch]);
+    
+    return(
+        <EmployeeView 
+            employee={employee}
+            employeeTask={employeeTask}
+        />
+    );
+
 }
-    const mapState = (state) => {
-        return{
-            employee : state.employee,
-            allTasks : state.allTasks,
-        };
-    };
-
-    const mapDispatch = (dispatch) => {
-        return{
-        fetchEmployee: (id) =>dispatch(fetchEmployee(id)),
-        fetchTasks: () =>dispatch(fetchTasks())
-    };
-};
-
-export default connect(mapState, mapDispatch)(EmployeeContainer);
+export default EmployeeContainer;

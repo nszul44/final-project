@@ -5,6 +5,9 @@ import App from './App.jsx';
 import AllEmployeesContainer from './components/containers/AllEmployeesContainer.jsx';
 import AllTasksContainer from './components/containers/AllTasksContainer.jsx';
 import EmployeeContainer from './components/containers/EmployeeContainer.jsx';
+import TaskContainer from './components/containers/TaskContainer.jsx';
+import NewEmployeeContainer from './components/containers/NewEmployeeContainer.jsx';
+import EditEmployeeContainer from './components/containers/EditEmployeeContainer.jsx';
 
 import './index.css';
 
@@ -27,9 +30,22 @@ const router = createBrowserRouter([
     element: <AllTasksContainer />,
   },
   {
-    path: "/employees/:id",
+    path: "/employees/new",
+    element: <NewEmployeeContainer/>
+  },
+  {
+    path: "/employees/:employeeId/edit",
+    element: <EditEmployeeContainer/>
+  },
+  {
+    path: "/employees/:employeeId",
     element: <EmployeeContainer/>
   },
+  {
+    path: "/tasks/:taskId",
+    element: <TaskContainer/>
+  },
+  
 ]);
 
 //Redux

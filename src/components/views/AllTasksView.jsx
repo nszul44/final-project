@@ -10,7 +10,11 @@ function AllTasksView({tasks}) {
     <>
       <ul>
         {tasks.map((todo, idx) => (
-          <li key={todo.id}>Task #{idx+1}: {todo.title}</li>
+          <div>
+            <Link to={`${todo.id}`}>
+          <li key={todo.id}>Task #{idx+1}: {todo.description}</li>
+          </Link>
+          </div>
         ))}
       </ul>
       <Link to={`/`}><button>Back to Home</button></Link>
