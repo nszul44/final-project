@@ -30,20 +30,23 @@ function EditEmployeeContainer(){
         const formData = new FormData(form);
         const formJson = Object.fromEntries(formData.entries());
     
+        // Determine taskId, handling "None" option properly
+        const taskId = formJson.taskId === "null" ? null : parseInt(formJson.taskId);
+    
         // Create the updated employee object
         const updates = {
             ...employee,
             firstname: formJson.firstName,
-            lastname: formJson.lastName, // Corrected typo
+            lastname: formJson.lastName,
             department: formJson.dept,
-            taskId: JSON.parse(formJson.taskId) // Corrected key
+            taskId: taskId  // Assign taskId, or null if "None" was selected
         };
     
         // Dispatch the update
         dispatch(editEmployee(updates));
     
         alert("Employee updated!");
-    }
+    };
 return <EditEmployeeView employee={employee} tasks={tasks} handleSubmit={handleSubmit}/>
 }
 export default EditEmployeeContainer;
