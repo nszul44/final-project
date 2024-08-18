@@ -1,24 +1,34 @@
 import { Link } from "react-router-dom";
 
-function AllTasksView({tasks}) {
+function AllTasksView({ tasks, deleteTask }) {
+
   if (!tasks.length) {
     return (
-      <div>There are no tasks.</div>
+      <>
+        <Link to={`/`}><button>Back to Home</button></Link>
+        <Link to={`/tasks/new`}><button>Add Task</button></Link>
+        <div>There are no tasks.</div>
+      </>
     );
   }
   return (
-    <>
-      <ul>
-        {tasks.map((todo, idx) => (
-          <div>
-            <Link to={`${todo.id}`}>
-          <li key={todo.id}>Task #{idx+1}: {todo.description}</li>
-          </Link>
-          </div>
-        ))}
-      </ul>
-      <Link to={`/`}><button>Back to Home</button></Link>
-    </>
+    <div id="bgview" style={{display: "flex", flexDirection: "column", padding: "8px", minWidth: "500px"}} >
+      <Link to={`/`}><button style={{margin: "8px"}}>Back to Home</button></Link>
+      <Link to={`/tasks/new`}><button style={{margin: "8px"}}>Add Task</button></Link>
+      <div>
+        {tasks.map((todo, idx) => {
+         
+          return (
+            <div key={todo.id}>
+              <h4>Task #{idx+1}: <Link to={`/tasks/${todo.id}`}>{todo.description}</Link></h4>
+              <h5>Assigned to: Employee {todo.employeeId}</h5>
+              <h5>{todo.completed ? "COMPLETED" : "IN PROGRESS"}</h5>
+              <button onClick={() => deleteTask(todo.id)}>Delete</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 
 }

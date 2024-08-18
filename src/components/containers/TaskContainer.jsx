@@ -1,28 +1,18 @@
-import EmployeeView from "../views/TaskView";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEmployees } from "../../store/employeesSlice";
-import { useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
+import TaskView from '../views/TaskView';
 
-function TaskContainer(){
-    let { taskId } = useParams();
-    taskId = parseInt(taskId);
+function TaskContainer() {
+  let { taskId } = useParams(); //get id from URL
+  taskId = parseInt(taskId); //convert to integer
 
-    const task = useSelector(state => state.tasks.find(task => task.employeeId === taskId));
-    
-    const taskEmployee = useSelector(state => state.employees.filter(taskEmployee => taskEmployee.id === taskId));
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(fetchEmployees());
-      }, [dispatch]);
-    
-    return(
-        <EmployeeView 
-            task={task}
-            taskEmployee={taskEmployee}
-        />
-    );
+  //get task from state based on URL parameter
+  const task = useSelector(state =>
+    state.tasks.find(task => task.id === taskId)
+  );
 
+  return <TaskView task={task}/>
 }
+
 export default TaskContainer;

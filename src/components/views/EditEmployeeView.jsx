@@ -29,13 +29,13 @@ function EditEmployeeView({handleSubmit, employee, tasks}){
             <label> Assign Task:
               <select name="taskId" defaultValue="null" required>
                 <option value="null">None</option>
-                {tasks.map(task => {
-                  let name = task.description;
-                  return <option key={task.id} value={task.id}>{name}</option>;
+                {tasks.map(tsk => {
+                  let name = tsk.description;
+                  return <option key={tsk.id} value={tsk.id}>{name}</option>;
                 })}
               </select>
             </label>
-            <button>Save Task</button>
+            <button>Save Employee</button>
         </form>
         <Link to={`../employees`}>Back to all employees</Link>
         </div>
